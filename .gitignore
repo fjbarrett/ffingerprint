@@ -1,0 +1,30 @@
+# Byte‐level CLI tool – gitignore
+
+# Bytecode and caches
+__pycache__/
+*.py[cod]
+*.so
+
+# Virtual environment (if you keep it under the repo)
+venv/
+env/
+.venv/
+
+# Test artifacts
+.pytest_cache/
+htmlcov/
+coverage.xml
+
+# Distribution/build files
+build/
+dist/
+*.egg-info/
+
+# Editor/IDE settings (add more as needed)
+.vscode/
+.idea/
+*.swp
+
+# OS files
+.DS_Store
+Thumbs.db
