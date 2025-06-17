@@ -1,5 +1,8 @@
 # Byte‐level CLI tool – gitignore
 
+# Hashes
+hashes/
+
 # Bytecode and caches
 __pycache__/
 *.py[cod]
