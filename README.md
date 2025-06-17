@@ -9,8 +9,6 @@ Usage
 The above command traverses a directory or file and creates a .json file of a key/value object in the following format:
 
 `filename => hash_value_of_file`
-`filename => hash_value_of_file`
-`filename => hash_value_of_file`
 
 The hash of a half-full 512 GB drive yielded a ~300MB .json file so watch out for that.
 
