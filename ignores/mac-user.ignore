@@ -1,0 +1,7 @@
+# Ignore cache and temp files
+*.tmp
+*.log
+.DS_Store
+__pycache__/
+node_modules/
+Library/Application Support/Google/Chrome/Default/Cache/
