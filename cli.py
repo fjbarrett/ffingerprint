@@ -11,32 +11,36 @@ except ImportError:
     tqdm = None
 
 
-# Traverse files in a directory tree, yielding full paths to regular files
+# Traverse files in a directory tree, yielding full paths of regular files
 def traverse_directory(root):
-    # Yield every *regular* file under input dir (no dirs, no broken links).
+    # Yield every valid file under input dir (no dirs, no broken links)
     for dirpath, _, filenames in os.walk(root):
         for fname in filenames:
             full_path = os.path.join(dirpath, fname)
-            if os.path.isfile(full_path):  # Skip dangling links / sockets
+            # Skip dangling links/sockets
+            if os.path.isfile(full_path): 
                 yield full_path
 
 
-# Compute the hash of a file, return None if the file can’t be read
+# Safely compute the hash of a file, return None if the file can’t be read
 def safe_hash(path, algo):
     try:
         return compute_byte_hash(path, algo)
     except (FileNotFoundError, PermissionError, OSError):
         return None
 
-
+# Compute hashes for all files in a directory tree, return a dict of relative paths to hashes
 def directory_hash(root_path, algo):
     files = traverse_directory(root_path)
     if tqdm:
         files = tqdm(files, unit="file", desc="Hashing")
 
+    # Create hashes dict
     hashes = {}
+    # Create skipped count
     skipped = 0
     for filepath in files:
+        # Run through safe_hash for validation
         hash = safe_hash(filepath, algo)
         if hash:
             rel = os.path.relpath(filepath, start=root_path)
@@ -50,8 +54,10 @@ def directory_hash(root_path, algo):
 def write_hashes(hashes, skipped, root_path, args):
     if os.path.isdir(root_path):
         parent_directory = os.path.basename(os.path.normpath(root_path)) or "root"
-        date_str = datetime.now().strftime("%Y%m%d_%H%M%S")  # Add time for granularity
+        # Create timestamp
+        date_str = datetime.now().strftime("%Y%m%d_%H%M%S")
         os.makedirs("hashes", exist_ok=True)
+        # Create JSON file of hashes
         outfile = os.path.join("hashes", f"hashes_{parent_directory}_{date_str}.json")
         with open(outfile, "w") as f:
             json.dump(hashes, f, indent=2)
@@ -60,7 +66,6 @@ def write_hashes(hashes, skipped, root_path, args):
         if skipped:
             print(f"Skipped {skipped} unreadable item(s).")
 
-            # ---------- single file ----------
         else:
             hash = safe_hash(root_path, args.algo)
             if hash:

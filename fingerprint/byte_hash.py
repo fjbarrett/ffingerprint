@@ -2,11 +2,11 @@ import hashlib
 
 
 def compute_byte_hash(filepath: str, algo: str = "sha256") -> str:
-    # Pick a hashlib constructor
+    # Select a hashing algorithm constructor
     if algo == "sha256":
-        hasher = hashlib.sha256()
+        hash = hashlib.sha256()
     elif algo == "md5":
-        hasher = hashlib.md5()
+        hash = hashlib.md5()
     else:
         raise ValueError(f"Unsupported algorithm: {algo}")
 
@@ -14,11 +14,12 @@ def compute_byte_hash(filepath: str, algo: str = "sha256") -> str:
     with open(filepath, "rb") as f:
         # Read loop
         while True:
-            chunk = f.read(4096)  # why 4096?
+            # Create chunk from file
+            chunk = f.read(4096)
             if not chunk:
                 break
             # Update the hash
-            hasher.update(chunk)
+            hash.update(chunk)
 
     # Return the hex digest
-    return hasher.hexdigest()
+    return hash.hexdigest()
