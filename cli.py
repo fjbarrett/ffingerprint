@@ -165,9 +165,7 @@ def main():
                     print(f"  {f}")
             print(f"Hashing completed in {elapsed:.2f} seconds.")
         except PermissionError:
-            print(
-                "Permission denied. Try running this command with elevated privileges (e.g., using 'sudo')."
-            )
+            print("Permission denied.")
             sys.exit(1)
 
 
