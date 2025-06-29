@@ -137,36 +137,32 @@ def should_ignore(path, patterns, root):
 def main():
     # Build parser
     parser = argparse.ArgumentParser()
-    sub = parser.add_subparsers(dest="command", required=True)
-
-    byte_parser = sub.add_parser("byte_hash")
-    group = byte_parser.add_mutually_exclusive_group(required=True)
+    group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument("filepath", nargs="?")
     group.add_argument("--drive", action="store_true")
-    byte_parser.add_argument("--algo", choices=["sha256", "md5"], default="sha256")
-    byte_parser.add_argument("--compare", action="store_true")
+    parser.add_argument("--algo", choices=["sha256", "md5"], default="sha256")
+    parser.add_argument("--compare", action="store_true")
     args = parser.parse_args()
 
     # Conditional for args
-    if args.command == "byte_hash":
-        if args.compare:
-            compare_hashes(args.filepath)
-            return
-        root_path = os.path.abspath(os.sep) if args.drive else args.filepath
+    if args.compare:
+        compare_hashes(args.filepath)
+        return
+    root_path = os.path.abspath(os.sep) if args.drive else args.filepath
 
-        try:
-            start_time = time.time()
-            hashes, skipped, unreadable_files = directory_hash(root_path, args.algo)
-            elapsed = time.time() - start_time
-            write_hashes(hashes, skipped, root_path, args)
-            if unreadable_files:
-                print("Unreadable files:")
-                for f in unreadable_files:
-                    print(f"  {f}")
-            print(f"Hashing completed in {elapsed:.2f} seconds.")
-        except PermissionError:
-            print("Permission denied.")
-            sys.exit(1)
+    try:
+        start_time = time.time()
+        hashes, skipped, unreadable_files = directory_hash(root_path, args.algo)
+        elapsed = time.time() - start_time
+        write_hashes(hashes, skipped, root_path, args)
+        if unreadable_files:
+            print("Unreadable files:")
+            for f in unreadable_files:
+                print(f"  {f}")
+        print(f"Hashing completed in {elapsed:.2f} seconds.")
+    except PermissionError:
+        print("Permission denied.")
+        sys.exit(1)
 
 
 if __name__ == "__main__":
