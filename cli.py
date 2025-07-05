@@ -29,8 +29,8 @@ def safe_hash(path, algo):
 
 
 # Compute hashes for all files in a directory tree, return a dict of relative paths to hashes
-def directory_hash(root_path, algo):
-    ignore_patterns = load_ignore_patterns("ignores/mac-user.ignore")
+def directory_hash(root_path, algo, ignore_file):
+    ignore_patterns = load_ignore_patterns(ignore_file)
     files = traverse_directory(root_path, ignore_patterns)
     if tqdm:
         files = tqdm(files, unit="file", desc="Hashing")
@@ -113,7 +113,7 @@ def compare_hashes(directory):
         print("No changes detected.")
 
 
-def load_ignore_patterns(ignore_file="ignores/mac-user.ignore"):
+def load_ignore_patterns(ignore_file="ignores/mac.ignore"):
     patterns = []
     if os.path.exists(ignore_file):
         with open(ignore_file) as f:
@@ -141,6 +141,12 @@ def main():
     group.add_argument("filepath", nargs="?")
     group.add_argument("--drive", action="store_true")
     parser.add_argument("--algo", choices=["sha256", "md5"], default="sha256")
+    parser.add_argument(
+        "--ignore",
+        choices=["mac", "win10", "win11"],
+        default="mac",
+        help="Select ignore file"
+    )
     parser.add_argument("--compare", action="store_true")
     args = parser.parse_args()
 
@@ -150,9 +156,12 @@ def main():
         return
     root_path = os.path.abspath(os.sep) if args.drive else args.filepath
 
+    ignore_file = os.path.join("ignores", args.ignore + ".ignore")
     try:
         start_time = time.time()
-        hashes, skipped, unreadable_files = directory_hash(root_path, args.algo)
+        hashes, skipped, unreadable_files = directory_hash(
+            root_path, args.algo, ignore_file
+        )
         elapsed = time.time() - start_time
         write_hashes(hashes, skipped, root_path, args)
         if unreadable_files:
