@@ -1,0 +1,60 @@
+# Windows system files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+System Volume Information/
+
+# Windows hidden files
+*.lnk
+*.bak
+
+# Windows cache and temp files
+*.tmp
+*.temp
+*.log
+*.~*
+*.swp
+*.swo
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+# JetBrains IDEs (e.g. PyCharm, WebStorm)
+.idea/
+
+# Environment and build files
+.env
+.env.*
+*.env.local
+*.env.*.local
+dist/
+build/
+out/
+
+# Cache folders
+.cache/
+.npm/
+.pnpm/
+.venv/
+.vscode-test/
+
+# macOS (in case cross-platform development)
+.DS_Store
+
+# Chrome cache (for specific dev use-cases)
+AppData/Local/Google/Chrome/User Data/Default/Cache/

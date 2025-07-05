@@ -1,0 +1,86 @@
+# Windows system files and metadata
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+System Volume Information/
+Recovery/
+swapfile.sys
+pagefile.sys
+hiberfil.sys
+
+# Windows hidden shortcuts and temp files
+*.lnk
+*.bak
+*.tmp
+*.temp
+*.~*
+*.swp
+*.swo
+
+# Windows 11 specific AppData locations (per-user cache)
+AppData/Local/Packages/
+AppData/Local/Temp/
+AppData/Local/Microsoft/WindowsApps/
+AppData/Local/CrashDumps/
+AppData/Local/VirtualStore/
+
+# Microsoft Edge (Chromium-based) Cache
+AppData/Local/Microsoft/Edge/User Data/Default/Cache/
+
+# Chrome Cache
+AppData/Local/Google/Chrome/User Data/Default/Cache/
+
+# Microsoft Office temp files
+~$*
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.venv/
+env/
+venv/
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Rust
+target/
+Cargo.lock
+
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+# JetBrains IDEs
+.idea/
+
+# Build and output folders
+build/
+dist/
+out/
+*.exe
+*.dll
+*.obj
+*.o
+
+# Environment and credentials
+.env
+.env.*
+secrets.*
+credentials.json
+
+# Git and package manager cache
+.cache/
+.npm/
+.pnpm/
+.bun/
+
+# macOS (cross-platform cases)
+.DS_Store
