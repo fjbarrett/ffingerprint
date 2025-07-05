@@ -52,7 +52,8 @@ def directory_hash(root_path, algo, ignore_file):
 
 def write_hashes(hashes, skipped, root_path, args):
     if os.path.isdir(root_path):
-        parent_directory = os.path.basename(os.path.normpath(root_path)) or "root"
+        abs_root = os.path.abspath(root_path)
+        parent_directory = os.path.basename(os.path.normpath(abs_root)) or "root"
         date_str = datetime.now().strftime("%Y%m%d_%H%M%S")
         os.makedirs("hashes", exist_ok=True)
         outfile = os.path.join("hashes", f"hashes_{parent_directory}_{date_str}.json")
@@ -72,7 +73,8 @@ def write_hashes(hashes, skipped, root_path, args):
 
 def find_latest_hash_files(directory):
     # Find all hash files for this directory
-    parent = os.path.basename(os.path.normpath(directory)) or "root"
+    abs_dir = os.path.abspath(directory)
+    parent = os.path.basename(os.path.normpath(abs_dir)) or "root"
     pattern = os.path.join("hashes", f"hashes_{parent}_*.json")
     files = sorted(glob.glob(pattern), reverse=True)
     # Return the two most recent files as basis for comparison
